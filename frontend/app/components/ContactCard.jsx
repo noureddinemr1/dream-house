@@ -1,4 +1,6 @@
-const ContactCard = ({ contact }) => (
+"use client";
+export default function ContactCard({ contact }) {
+  return (
     <div className="flex flex-col p-6 bg-white shadow-lg rounded-lg mb-6 hover:shadow-xl transition-shadow duration-300">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-2xl font-bold text-gray-800">{contact.name}</h2>
@@ -16,6 +18,4 @@ const ContactCard = ({ contact }) => (
       </div>
     </div>
   );
-  
-  export default ContactCard;
-  
+}

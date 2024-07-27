@@ -1,15 +1,23 @@
 "use client";
 import { useEffect, useState } from "react";
 import ContactCard from "@/app/components/ContactCard";
+import axios from "axios";
 
 export default function AdminDashboard() {
   const [contacts, setContacts] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:8080/contacts')
-      .then(res => res.json())
-      .then(data => setContacts(data))
-      .catch(error => console.error('Error:', error));
+    const fetchContacts = async () => {
+      try {
+        const response = await axios.get('http://localhost:8080/contacts');
+        const data = response.data;
+        setContacts(data);
+      } catch (error) {
+        console.error('Error fetching contacts:', error);
+      }
+    };
+
+    fetchContacts();
   }, []);
 
   return (

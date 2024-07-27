@@ -1,9 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 import { FaEdit, FaTrash } from 'react-icons/fa';
 
-export default function CardDash({ item, onClick, onUpdate, onDelete }) {
+export default function CardDash({ item, onUpdate, onDelete }) {
   return (
-    <div className="my-6 mx-auto w-full max-w-5xl" onClick={onClick}>
+    <div className="my-6 mx-auto w-full max-w-5xl">
       <div className="bg-white shadow-md rounded-lg overflow-hidden transition-transform transform hover:scale-105 duration-300 flex">
         <img className="w-48 h-48 object-cover" src={item.image} alt="Product" />
         <div className="p-5 flex flex-col justify-between flex-1">

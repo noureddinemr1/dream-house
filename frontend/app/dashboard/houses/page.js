@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 import { FaPlus } from 'react-icons/fa';
 import CardDash from "@/app/components/CardDash";
 import UpdateForm from "@/app/components/UpdateForm";
-import AddHouse from "@/app/components/AddHouse"; 
+import AddHouse from "@/app/components/AddHouse";
+import axios from 'axios';
 
 export default function Houses() {
   const [items, setItems] = useState([]);
@@ -11,60 +12,57 @@ export default function Houses() {
   const [showAddForm, setShowAddForm] = useState(false); 
 
   useEffect(() => {
-    fetch('http://localhost:8080/houses')
-      .then(res => res.json())
-      .then(data => setItems(data));
-  }, []); 
+    const fetchHouses = async () => {
+      try {
+        const response = await axios.get('http://localhost:8080/houses');
+        setItems(response.data);
+      } catch (error) {
+        console.error('Error fetching houses:', error);
+      }
+    };
 
-  const handleUpdate = (updatedData) => {
-    fetch(`http://localhost:8080/houses/${selectedHouse._id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(updatedData),
-    })
-      .then(res => {
-        if (res.ok) {
-          setItems(items.map(item =>
-            item._id === selectedHouse._id ? { ...item, ...updatedData } : item
-          ));
-          setSelectedHouse(null);
-        } else {
-          console.error('Failed to update house');
-        }
-      })
-      .catch(error => console.error('Error:', error));
+    fetchHouses();
+  }, []);
+
+  const handleUpdate = async (updatedData) => {
+    try {
+      const response = await axios.put(`http://localhost:8080/houses/${selectedHouse._id}`, updatedData);
+      if (response.status === 200) {
+        setItems(items.map(item =>
+          item._id === selectedHouse._id ? { ...item, ...updatedData } : item
+        ));
+        setSelectedHouse(null);
+      } else {
+        console.error('Failed to update house');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
-  const handleDelete = (item) => {
-    fetch(`http://localhost:8080/houses/${item._id}`, {
-      method: 'DELETE',
-    })
-      .then(res => {
-        if (res.ok) {
-          setItems(items.filter(i => i._id !== item._id));
-        } else {
-          console.error('Failed to delete house');
-        }
-      })
-      .catch(error => console.error('Error:', error));
+  const handleDelete = async (item) => {
+    try {
+      const response = await axios.delete(`http://localhost:8080/houses/${item._id}`);
+      if (response.status === 200) {
+        setItems(items.filter(i => i._id !== item._id));
+      } else {
+        console.error('Failed to delete house');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
-  const handleAdd = (newHouse) => {
-    fetch('http://localhost:8080/addhouse', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(newHouse),
-    })
-      .then(res => res.json())
-      .then(data => {
-        setItems([...items, data]);
+  const handleAdd = async (newHouse) => {
+    try {
+      const response = await axios.post('http://localhost:8080/addhouse', newHouse);
+      if (response.status === 200) {
+        setItems([...items, response.data]);
         setShowAddForm(false);
-      })
-      .catch(error => console.error('Error:', error));
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   return (
