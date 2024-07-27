@@ -6,7 +6,7 @@ export default function AddHouse({ onClose, onAdd }) {
     name: '',
     price: '',
     title: '',
-    category: 'House',
+    category: 'Luxury',
   });
 
   const handleChange = (e) => {
@@ -77,8 +77,10 @@ export default function AddHouse({ onClose, onAdd }) {
               className="w-full p-2 border border-gray-300 rounded"
               required 
             >
-              <option value="House">House</option>
+              <option value="Luxury">Luxury</option>
               <option value="Apartment">Apartment</option>
+              <option value="Cottage">Cottage</option>
+              <option value="Beach House">Beach house</option>
             </select>
           </div>
           <div className="flex justify-end space-x-2">

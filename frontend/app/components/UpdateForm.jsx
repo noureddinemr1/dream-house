@@ -78,10 +78,10 @@ export default function UpdateForm({ house, onClose, onUpdate }) {
               onChange={handleChange}
               className="w-full border border-gray-300 p-2 rounded"
             >
-              <option value="">Select a category</option>
-              <option value="apartment">Apartment</option>
-              <option value="house">House</option>
-              <option value="condo">Condo</option>
+              <option value="Luxury">Luxury</option>
+              <option value="Apartment">Apartment</option>
+              <option value="Cottage">Cottage</option>
+              <option value="Beach House">Beach house</option>
             </select>
           </div>
           <div className="mb-4">
